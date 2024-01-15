@@ -47,6 +47,7 @@ fun FilmInfo(
     overview: String,
     state : CastState
 ) {
+    println()
 
     Spacer(modifier = Modifier.height(10.dp))
 
@@ -76,10 +77,6 @@ fun FilmInfo(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 ExpandableText(text = overview)
-
-                //Text(text = "Cast", fontSize = 22.sp,color = Color.White)
-
-                //CastItem(castName = state.cast , modifier = Modifier)
 
             }
         }

@@ -35,6 +35,7 @@ fun DetailScreen(
     val scrollState = rememberLazyListState()
     val state = viewModel.state.value
     val castState = viewModel.castState
+    val fragmanState = viewModel.fragmanState
 
     Column(modifier = modifier.fillMaxSize()) {
         Text(text = state.title)
@@ -50,6 +51,7 @@ fun DetailScreen(
         )
         FilmImageBanner(
             rating = state.voteAverage.toFloat(),
+            key= fragmanState.value.videoUrl!!,
             viewModel = viewModel,
             navController = navController,
             viewModelFav = viewModelFav,

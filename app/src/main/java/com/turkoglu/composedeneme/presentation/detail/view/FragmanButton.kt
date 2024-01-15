@@ -47,7 +47,4 @@ fun FragmanButton(
 
         }
     }
-
-
-
 }

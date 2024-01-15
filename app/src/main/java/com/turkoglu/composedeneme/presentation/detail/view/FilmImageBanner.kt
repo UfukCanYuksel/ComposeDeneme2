@@ -1,7 +1,12 @@
 package com.turkoglu.composedeneme.presentation.detail.view
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.turkoglu.composedeneme.data.local.Favorite
@@ -37,6 +44,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FilmImageBanner(
     rating: Float,
+    key : String,
     viewModel: DetailScreenViewModel,
     navController: NavController,
     posterUrl: String,
@@ -48,7 +56,13 @@ fun FilmImageBanner(
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val state = viewModel.state.value
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(key))
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ -> }
+
+
+
     TopAppBar(
         contentPadding = PaddingValues(),
         backgroundColor = primaryDark,
@@ -86,9 +100,27 @@ fun FilmImageBanner(
             .padding(horizontal = 10.dp)
     ) {
         CircularBackButtons(onClick = { navController.popBackStack() })
-        FragmanButton {
-            //youtube
-        }
+        FragmanButton(onClick = {
+            println("banner key = $key")
+            launcher.launch(intent)
+            //uriHandler.openUri(key)
+            /*try {
+                // Başlatılan uygulama mevcutsa kullan, yoksa tarayıcıyı kullan
+                if (intent.resolveActivity(context.packageManager) != null) {
+                    startActivity(intent)
+                } else {
+                    // Tarayıcıyı başlat
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(key))
+                    startActivity(browserIntent)
+                }
+            } catch (e: ActivityNotFoundException) {
+                // Handle the exception, for example, show an error message
+                e.printStackTrace()
+            }*/
+
+
+
+        })
         CircularFavoriteButtons(
             isLiked = viewModelFav.isAFavorite(filmId).observeAsState().value != null,
             onClick = { isFav ->

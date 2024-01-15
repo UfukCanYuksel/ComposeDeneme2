@@ -1,6 +1,8 @@
 package com.turkoglu.composedeneme.presentation.detail
 
 import com.turkoglu.composedeneme.data.remote.dto.Genre
+import com.turkoglu.composedeneme.data.remote.dto.Video
+import com.turkoglu.composedeneme.domain.model.VideoModel
 
 data class DetailState (
     val genres: List<Genre> = emptyList(),

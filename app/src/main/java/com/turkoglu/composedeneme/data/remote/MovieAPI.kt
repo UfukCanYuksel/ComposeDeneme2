@@ -5,6 +5,7 @@ import com.turkoglu.composedeneme.data.remote.dto.CreateRequestToken
 import com.turkoglu.composedeneme.data.remote.dto.CreateSession
 import com.turkoglu.composedeneme.data.remote.dto.CreditsDto
 import com.turkoglu.composedeneme.data.remote.dto.MovieDetailDto
+import com.turkoglu.composedeneme.data.remote.dto.MovieVideoDto
 import com.turkoglu.composedeneme.data.remote.dto.MoviesDto
 import com.turkoglu.composedeneme.data.remote.dto.MultiSearchDto
 import com.turkoglu.composedeneme.data.remote.dto.RequestCreateSession
@@ -69,6 +70,12 @@ interface MovieAPI {
         @Query("query") query: String,
         @Query("api_key") apiKey: String = API_KEY
     ): MultiSearchDto
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideo(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ) : MovieVideoDto
 
 
 
