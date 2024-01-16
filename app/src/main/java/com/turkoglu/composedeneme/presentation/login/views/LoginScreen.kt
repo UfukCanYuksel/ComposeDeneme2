@@ -26,9 +26,11 @@ import com.turkoglu.composedeneme.R
 import com.turkoglu.composedeneme.presentation.login.LoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavHostController,
-                viewModel: LoginViewModel = hiltViewModel(),
-                onLoginSuccess: () -> Unit) {
+fun LoginScreen(
+    navController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel(),
+    onLoginSuccess: () -> Unit
+) {
 
     //val state = viewModel.state.value
     var username by remember { mutableStateOf("") }
@@ -38,114 +40,116 @@ fun LoginScreen(navController: NavHostController,
     var loginButton by remember { mutableStateOf(rememberMe) }
 
 
-    if (viewModel.getRememberMeStatus()&&loginButton){
-        onLoginSuccess()
-    }else{
-        Column(
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "Logo",
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .size(240.dp)
+                .clip(MaterialTheme.shapes.medium)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextField(
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Person, contentDescription = "Username")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Lock, contentDescription = "Password")
+            },
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = if (passwordVisibility) "Hide Password" else "Show Password",
+                    modifier = Modifier.clickable { passwordVisibility = !passwordVisibility }
+                )
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
+            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier
-                    .size(240.dp)
-                    .clip(MaterialTheme.shapes.medium)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            TextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Person, contentDescription = "Username")
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Lock, contentDescription = "Password")
-                },
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = if (passwordVisibility) "Hide Password" else "Show Password",
-                        modifier = Modifier.clickable { passwordVisibility = !passwordVisibility }
-                    )
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    modifier = Modifier.clickable {
-                        rememberMe = !rememberMe
-                    }
-                ) {
-                    Checkbox(
-                        checked = rememberMe,
-                        onCheckedChange = { checked -> rememberMe = checked
-                                          viewModel.saveRememberMeStatus(rememberMe)},
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
-                    Text("Beni Hatırla",
-                        color = Color.LightGray,
-                        fontSize = 18.sp,
-                        modifier = Modifier.padding(top = 10.dp))
+                modifier = Modifier.clickable {
+                    rememberMe = !rememberMe
+                    viewModel.saveRememberMeStatus(rememberMe)
+                    println(rememberMe)
                 }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {
-                    if (username == "user" && password == "123") {
-                        loginButton = true
-                        viewModel.login(username = username, password = password)
-                        viewModel.saveCredentials(username, password)
-                        viewModel.saveRememberMeStatus(rememberMe)
-                        onLoginSuccess()
-                    }
-                          },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
             ) {
-                Text("Login", color = Color.White)
+                Checkbox(
+                    checked = rememberMe,
+                    onCheckedChange = { checked ->
+                        rememberMe = checked
+                    },
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    "Beni Hatırla",
+                    color = Color.LightGray,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "Don't have an account? Sign up",
-                color = Color.LightGray,
-                modifier = Modifier.clickable { /* Handle sign-up */ }
-            )
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = {
+                if (username == "user" && password == "123") {
+                    loginButton = true
+                    viewModel.login(username = username, password = password)
+                    viewModel.saveCredentials(username, password)
+                    viewModel.saveRememberMeStatus(rememberMe)
+                    onLoginSuccess()
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+        ) {
+            Text("Login", color = Color.White)
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Don't have an account? Sign up",
+            color = Color.LightGray,
+            modifier = Modifier.clickable { /* Handle sign-up */ }
+        )
     }
 
 

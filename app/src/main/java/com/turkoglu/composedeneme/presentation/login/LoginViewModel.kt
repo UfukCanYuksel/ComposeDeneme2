@@ -56,12 +56,13 @@ class LoginViewModel @Inject constructor(
     fun saveRememberMeStatus(rememberMe: Boolean) {
         // SharedPreferences üzerinde hatırlama durumunu kaydet
         sharedPreferences.edit().putBoolean("remember_me", rememberMe).apply()
+        println("kayıt edildi rememberMe : $rememberMe")
         //_state.value.isRemember = rememberMe
     }
 
     fun getRememberMeStatus(): Boolean {
         // SharedPreferences üzerinden hatırlama durumunu al
-        return sharedPreferences.getBoolean("remember_me", false)
+        return sharedPreferences.getBoolean("remember_me", true)
     }
 
     fun saveCredentials(username: String, password: String) {

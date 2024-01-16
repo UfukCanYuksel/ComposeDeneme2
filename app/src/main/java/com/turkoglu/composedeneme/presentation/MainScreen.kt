@@ -75,7 +75,6 @@ fun MainScreen(
 
                 ) {
                     LoginScreen(navController = navController){
-                        viewModel.saveRememberMeStatus(false)
                         navController.navigate(Screen.HomeScreen.route)
                     }
                 }
@@ -210,7 +209,7 @@ fun MainScreen(
 
                 ) {
                     //Navigations(navController = navController)
-                    SettingsScreen()
+                    SettingsScreen(navController)
 
                 }
             }
@@ -348,7 +347,7 @@ fun Navigations(navController: NavHostController) {
             FavScreen(navController)
         }
         composable(Screen.SettingsScreen.route) {
-            SettingsScreen()
+            SettingsScreen(navController)
         }
         composable(
             Screen.Detail.route,
