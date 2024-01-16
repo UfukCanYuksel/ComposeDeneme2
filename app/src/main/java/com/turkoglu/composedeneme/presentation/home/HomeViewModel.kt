@@ -63,6 +63,10 @@ class HomeViewModel @Inject constructor(
         getHistoryMovies()
         getWarMovies()
     }
+
+
+
+
     private fun getPopularMovies(){
         viewModelScope.launch{
             _popularState.value =movieRepository.getMovies(useIncreasingPage).cachedIn(viewModelScope)

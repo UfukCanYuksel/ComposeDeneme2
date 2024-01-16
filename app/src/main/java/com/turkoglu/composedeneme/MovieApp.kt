@@ -28,7 +28,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.turkoglu.composedeneme.presentation.BottomNavigationBar
 import com.turkoglu.composedeneme.presentation.Screen
 import com.turkoglu.composedeneme.presentation.home.HomeViewModel
 import com.turkoglu.composedeneme.presentation.home.view.HomeScreen
