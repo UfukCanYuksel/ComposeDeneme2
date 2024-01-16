@@ -319,17 +319,6 @@ fun MainScreen(
     }*/
 }
 
-// Kullanıcının giriş yapmış olup olmadığını kontrol et
-fun isUserLoggedIn(): Boolean {
-    // Bu kısmı kendi uygulamanızın gereksinimlerine göre uyarlayın
-    // Örneğin, bir oturum durumu kontrolü yapabilirsiniz.
-    // Burada sadece basit bir örnek kullanılmıştır.
-    // Gerçek uygulamada genellikle bir oturum yönetimi kütüphanesi veya
-    // kimlik doğrulama durumu kullanılacaktır.
-
-    return false// Burada kullanıcının giriş yapmış olup olmadığını kontrol edin.
-}
-
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun Navigations(navController: NavHostController) {
