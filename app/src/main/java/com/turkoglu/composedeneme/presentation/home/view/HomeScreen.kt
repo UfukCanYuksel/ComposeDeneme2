@@ -1,7 +1,6 @@
 package com.turkoglu.composedeneme.presentation.home.view
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +30,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.turkoglu.composedeneme.domain.model.Movie
 import com.turkoglu.composedeneme.presentation.home.HomeViewModel
 import com.turkoglu.composedeneme.presentation.home.MovieListItem
+
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun HomeScreen(
@@ -132,7 +132,7 @@ fun CustomMovies(type : LazyPagingItems<Movie> , modifier: Modifier ,navigateToD
                         uniqueIds.add(id)
                     }
                     val key = "${movie.id?.toString()}_${index}"
-                    Log.d("LazyRowKey", "Key: $key, Index: $index, Movie ID: ${movie.id}")
+                    //Log.d("LazyRowKey", "Key: $key, Index: $index, Movie ID: ${movie.id}")
                     key
                 }
             ) { _, movie ->

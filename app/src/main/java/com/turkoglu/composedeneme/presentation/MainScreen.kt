@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -36,6 +37,8 @@ import androidx.navigation.navArgument
 import com.turkoglu.composedeneme.presentation.detail.view.DetailScreen
 import com.turkoglu.composedeneme.presentation.fav.view.FavScreen
 import com.turkoglu.composedeneme.presentation.home.view.HomeScreen
+import com.turkoglu.composedeneme.presentation.login.LoginViewModel
+import com.turkoglu.composedeneme.presentation.login.views.LoginScreen
 import com.turkoglu.composedeneme.presentation.search.views.SearchScreen
 import com.turkoglu.composedeneme.presentation.settings.view.SettingsScreen
 import com.turkoglu.composedeneme.presentation.viewall.view.ViewAllScreen
@@ -45,6 +48,252 @@ import com.turkoglu.composedeneme.presentation.viewall.view.ViewAllScreen
 fun MainScreen(
     navController: NavHostController
 ) {
+    val viewModel: LoginViewModel = hiltViewModel()
+    val isUserLoggedIn = viewModel.getRememberMeStatus()
+
+    NavHost(
+        navController = navController,
+        startDestination =if (isUserLoggedIn) {
+            Screen.HomeScreen.route
+        } else {
+            Screen.LoginScreen.route
+        }
+    ) {
+        composable(Screen.LoginScreen.route) {
+            Scaffold (modifier = Modifier.background(MaterialTheme.colors.background)) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    LoginScreen(navController = navController){
+                        navController.navigate(Screen.HomeScreen.route)
+                    }
+                }
+            }
+        }
+        composable(Screen.HomeScreen.route) {
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    //Navigations(navController = navController)
+                    HomeScreen(navController = navController){
+                        navController.navigate(
+                            "Detail/${it.id}"
+                        )
+                    }
+
+                }
+            }
+        }
+        composable(Screen.SearchScreen.route) {
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    //Navigations(navController = navController)
+                    SearchScreen(navController)
+
+                }
+            }
+
+
+
+        }
+        composable(
+            Screen.FavScreen.route
+        ) {
+
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    //Navigations(navController = navController)
+                    FavScreen(navController)
+
+                }
+            }
+
+
+
+        }
+        composable(Screen.SettingsScreen.route) {
+
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    //Navigations(navController = navController)
+                    SettingsScreen(navController)
+
+                }
+            }
+
+        }
+        composable(
+            Screen.Detail.route,
+            arguments = listOf(navArgument("movieId") { type = NavType.IntType })
+        ) {
+
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    DetailScreen(navController)
+
+                }
+            }
+
+        }
+
+        composable(
+            Screen.ViewAll.route,
+            arguments = listOf(navArgument("selectedType") { type = NavType.StringType })
+        ) {
+
+            Scaffold(
+                modifier = Modifier.background(MaterialTheme.colors.background),
+                bottomBar = {
+                    Modifier.background(MaterialTheme.colors.background)
+                    BottomAppBar(modifier = Modifier.background(MaterialTheme.colors.background)) {
+                        BottomNavigationBar(navController = navController)
+
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier
+                        .padding(
+                            PaddingValues(
+                                0.dp,
+                                0.dp,
+                                0.dp,
+                                innerPadding.calculateBottomPadding()
+                            )
+                        )
+                        .background(MaterialTheme.colors.background)
+
+                ) {
+                    ViewAllScreen(navController){
+                        navController.navigate(
+                            "Detail/${it.id}"
+                        )
+                    }
+
+                }
+            }
+
+        }
+
+
+
+    }
+
+/*
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colors.background),
         bottomBar = {
@@ -67,6 +316,46 @@ fun MainScreen(
         ) {
             Navigations(navController = navController)
         }
+    }*/
+}
+
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+@Composable
+fun Navigations(navController: NavHostController) {
+    NavHost(navController= navController, startDestination = Screen.HomeScreen.route) {
+        composable(Screen.HomeScreen.route) {
+            HomeScreen(navController, navigateToDetail = {movie ->
+                navController.navigate("Detail/${movie.id}") })
+        }
+        composable(Screen.SearchScreen.route) {
+            SearchScreen(navController)
+        }
+        composable(
+            Screen.FavScreen.route
+        ) {
+            FavScreen(navController)
+        }
+        composable(Screen.SettingsScreen.route) {
+            SettingsScreen(navController)
+        }
+        composable(
+            Screen.Detail.route,
+            arguments = listOf(navArgument("movieId") { type = NavType.IntType })
+        ) {
+            DetailScreen(navController)
+        }
+
+        composable(
+            Screen.ViewAll.route,
+            arguments = listOf(navArgument("selectedType") { type = NavType.StringType })
+        ) {
+            ViewAllScreen(navController){
+                navController.navigate(
+                    "Detail/${it.id}"
+                )
+            }
+        }
+
     }
 }
 
@@ -111,46 +400,6 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 }
-
-@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-@Composable
-fun Navigations(navController: NavHostController) {
-    NavHost(navController= navController, startDestination = Screen.HomeScreen.route) {
-        composable(Screen.HomeScreen.route) {
-            HomeScreen(navController, navigateToDetail = {movie ->
-                navController.navigate("Detail/${movie.id}") })
-
-
-        }
-        composable(Screen.SearchScreen.route) {
-            SearchScreen(navController)
-        }
-        composable(Screen.FavScreen.route
-        ) {
-            FavScreen(navController)
-        }
-        composable(Screen.SettingsScreen.route) {
-            SettingsScreen()
-        }
-        composable(Screen.Detail.route,
-            arguments = listOf(navArgument("movieId") { type = NavType.IntType })
-        ) {
-            DetailScreen(navController)
-        }
-       
-        composable(Screen.ViewAll.route,
-            arguments = listOf(navArgument("selectedType") { type = NavType.StringType })
-        ) {
-            ViewAllScreen(navController){
-                navController.navigate(
-                    "Detail/${it.id}"
-                )
-            }
-        }
-
-    }
-}
-
 
 @Composable
 fun CenterText(text: String) {
