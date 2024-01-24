@@ -1,5 +1,9 @@
 package com.turkoglu.composedeneme.presentation.login.views
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -39,7 +43,8 @@ fun LoginScreen(
     var passwordVisibility by remember { mutableStateOf(false) }
     var loginButton by remember { mutableStateOf(rememberMe) }
 
-
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/signup"))
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ -> }
 
     Column(
         modifier = Modifier
@@ -128,7 +133,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if (username == "user" && password == "123") {
+                if (username == "user1" && password == "123456") {
                     loginButton = true
                     viewModel.login(username = username, password = password)
                     viewModel.saveCredentials(username, password)
@@ -148,7 +153,10 @@ fun LoginScreen(
         Text(
             text = "Don't have an account? Sign up",
             color = Color.LightGray,
-            modifier = Modifier.clickable { /* Handle sign-up */ }
+            modifier = Modifier.clickable {
+                //https://www.themoviedb.org/signup
+                launcher.launch(intent)
+            }
         )
     }
 

@@ -56,12 +56,9 @@ fun FilmImageBanner(
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
     val state = viewModel.state.value
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(key))
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ -> }
-
-
 
     TopAppBar(
         contentPadding = PaddingValues(),

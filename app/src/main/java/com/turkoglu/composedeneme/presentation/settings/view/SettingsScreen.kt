@@ -30,18 +30,21 @@ import com.turkoglu.composedeneme.presentation.login.LoginViewModel
 
 @Composable
 fun SettingsScreen(
-    navController : NavController,
+    navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    Box (modifier = Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colors.background)
-    ){
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp), // Sayfa kenarlarından padding
-            horizontalArrangement = Arrangement.SpaceBetween) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp), // Sayfa kenarlarından padding
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
             Text(
                 text = "Settings",
@@ -53,12 +56,12 @@ fun SettingsScreen(
             Text(text = "Sign Out",
                 color = Color.Red,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(top = 6.dp)
+                modifier = Modifier
+                    .padding(top = 6.dp)
                     .clickable {
                         viewModel.saveRememberMeStatus(rememberMe = false)
                         navController.navigate("Login")
                     })
-
 
 
         }

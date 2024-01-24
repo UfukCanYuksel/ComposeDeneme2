@@ -400,14 +400,3 @@ fun BottomNavigationBar(navController: NavController) {
         }
     }
 }
-
-@Composable
-fun CenterText(text: String) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = text, fontSize = 32.sp, color = Color.Red)
-    }
-}
